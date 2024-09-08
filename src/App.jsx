@@ -1,33 +1,39 @@
 import { useDispatch, useSelector } from "react-redux";
+import { lazy, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import ContactList from "./components/ContactList/ContactList";
-import SearchBox from "./components/SearchBox/SearchBox";
-import ContactForm from "./components/ContactForm/ContactForm";
-import Loader from "./components/Loader/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+const HomePage = lazy(() => import("./pages/HomePage"));
+const ContactsPage = lazy(() => import("./pages/ContactsPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
 
 import "./App.css";
-import { useEffect } from "react";
-import { fetchContacts } from "./redux/contactsOps";
-import { selectError, selectLoading } from "./redux/contactsSlice";
+
+import { selectError, selectLoading } from "./redux/contacts/slice";
+import Layout from "/src/Layout";
+import { selectAuthIsRefreshing } from "./redux/auth/selectors";
+import { apirefreshUser } from "./redux/auth/operations";
 
 function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectLoading);
-  const isError = useSelector(selectError);
+  const isRefreshing = useSelector(selectAuthIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(apirefreshUser());
   }, [dispatch]);
 
-  return (
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
     <div>
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <SearchBox />
-      {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
-      <ContactList />
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+        </Routes>
+      </Layout>
     </div>
   );
 }
