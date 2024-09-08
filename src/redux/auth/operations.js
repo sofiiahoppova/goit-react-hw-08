@@ -6,7 +6,7 @@ export const instance = axios.create({
 });
 
 const SetAuthHeaders = (token) => {
-  instance.defaults.headers.common.Authorization = `Baerer ${token}`;
+  instance.defaults.headers.common["Authorization"] = `${token}`;
 };
 
 export const apiRegister = createAsyncThunk(
@@ -50,7 +50,7 @@ export const apiLogout = createAsyncThunk(
   }
 );
 
-export const apirefreshUser = createAsyncThunk(
+export const apiRefreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkApi) => {
     try {
@@ -63,5 +63,13 @@ export const apirefreshUser = createAsyncThunk(
     } catch (error) {
       return thunkApi.rejectWithValue();
     }
+  },
+  {
+    condition: (_, thunkApi) => {
+      const state = thunkApi.getState();
+      const token = state.auth.token;
+      if (token) return true;
+      return false;
+    },
   }
 );

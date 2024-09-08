@@ -10,10 +10,14 @@ const Loader = () => {
       wrapperStyle={{
         display: "block",
         margin: "auto",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
       }}
       wrapperClass="magnifying-glass-wrapper"
       glassColor="#c0efff"
-      color="rgb(84, 65, 196)"
+      color="rgb(255, 116, 136)"
     />
   );
 };

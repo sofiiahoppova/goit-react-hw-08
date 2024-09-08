@@ -9,17 +9,18 @@ const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
 
 import "./App.css";
 
-import { selectError, selectLoading } from "./redux/contacts/slice";
 import Layout from "/src/Layout";
 import { selectAuthIsRefreshing } from "./redux/auth/selectors";
-import { apirefreshUser } from "./redux/auth/operations";
+import { apiRefreshUser } from "./redux/auth/operations";
+import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectAuthIsRefreshing);
 
   useEffect(() => {
-    dispatch(apirefreshUser());
+    dispatch(apiRefreshUser());
   }, [dispatch]);
 
   return isRefreshing ? (
@@ -29,9 +30,18 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/contacts" element={<ContactsPage />} />
+          <Route
+            path="/login"
+            element={<RestrictedRoute component={<LoginPage />} />}
+          />
+          <Route
+            path="/register"
+            element={<RestrictedRoute component={<RegistrationPage />} />}
+          />
+          <Route
+            path="/contacts"
+            element={<PrivateRoute component={<ContactsPage />} />}
+          />
         </Routes>
       </Layout>
     </div>
