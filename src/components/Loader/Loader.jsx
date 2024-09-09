@@ -17,7 +17,7 @@ const Loader = () => {
       }}
       wrapperClass="magnifying-glass-wrapper"
       glassColor="#c0efff"
-      color="rgb(255, 116, 136)"
+      color="#238be0"
     />
   );
 };

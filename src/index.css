@@ -1,11 +1,11 @@
 a {
   font-weight: 500;
-  color: inherit;
+  color: #fff;
   text-decoration: inherit;
   transition: all 0.25s;
 }
 a:hover {
-  color: rgb(255, 116, 136);
+  color: #238be0;
 }
 
 body {
@@ -33,14 +33,14 @@ h1 {
 }
 
 button {
-  margin-left: 12px;
   border-radius: 8px;
   padding: 12px 24px;
   border: none;
   font-size: 16px;
   font-weight: 500;
   font-family: inherit;
-  background-color: transparent;
+  background-color: #249cff;
+  color: #fff;
   cursor: pointer;
 
   box-shadow: -1px 2px 16px -4px rgba(0, 0, 0, 0.75);
@@ -49,8 +49,7 @@ button {
 
 button:focus,
 button:hover {
-  background-color: black;
-  color: rgb(255, 116, 136);
+  background-color: #238be0;
 }
 
 input {

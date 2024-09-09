@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { deleteContact } from "../../redux/contacts/operations";
 
 import css from "./Contact.module.css";
+import toast from "react-hot-toast";
 
 function Contact({ id, name, number }) {
   const dispatch = useDispatch();
   const onDeleteContact = (id) => {
     dispatch(deleteContact(id));
+    toast.success("Your contact deleted sucsessfuly", { duration: 1500 });
   };
 
   return (
